@@ -42,6 +42,7 @@
             android:layout_margin="1dp"
             android:background="#0000"
             android:scaleType="fitCenter"
+            android:onClick="onClickFacebookSignInButton"
             app:srcCompat="@drawable/fb_button_src" />
 
         <ImageButton

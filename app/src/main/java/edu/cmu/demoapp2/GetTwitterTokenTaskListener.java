@@ -8,6 +8,8 @@ import twitter4j.auth.AccessToken;
 
 public interface GetTwitterTokenTaskListener {
 
+    // these callback functions must be implemented in ui thread because it is
+    // used to update the gui of an activity
     void onTaskCompleted(AccessToken accessToken);
     void onTaskFailed(String message);
 }

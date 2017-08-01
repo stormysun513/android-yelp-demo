@@ -13,6 +13,8 @@ android {
 
         buildConfigField("String", "TWITTER_API_KEY", TWITTER_API_KEY)
         buildConfigField("String", "TWITTER_API_SECRET", TWITTER_API_SECRET)
+        buildConfigField("String", "YELP_API_KEY", YELP_API_KEY)
+        buildConfigField("String", "YELP_API_SECRET", YELP_API_SECRET)
     }
     buildTypes {
         release {

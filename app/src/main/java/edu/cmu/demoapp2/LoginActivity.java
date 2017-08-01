@@ -1,5 +1,6 @@
 package edu.cmu.demoapp2;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -9,7 +10,7 @@ import twitter4j.auth.AccessToken;
 
 public class LoginActivity extends AppCompatActivity implements GetTwitterTokenTaskListener{
 
-    private static final String TAG = "DEMO";
+    private static final String TAG = "YELP_DEMO";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,6 +23,11 @@ public class LoginActivity extends AppCompatActivity implements GetTwitterTokenT
     protected void onResume() {
         super.onResume();
         hideSystemUI();
+    }
+
+    public void onClickFacebookSignInButton(View view){
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
     }
 
     public void onClickTwitterSignInButton(View view){
