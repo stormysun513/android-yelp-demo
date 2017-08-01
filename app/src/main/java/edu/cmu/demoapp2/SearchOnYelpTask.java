@@ -22,31 +22,30 @@ import retrofit2.Response;
  * Created by Yu-Lun Tsai on 31/07/2017.
  */
 
-public class SearchOnYelpTask extends AsyncTask<String, Void, Void> {
+public class SearchOnYelpTask extends AsyncTask<YelpSearchParameter, Void, Void> {
 
     private static final String TAG = "YELP_DEMO";
 
     private Context mContext;
-
-    private static YelpFusionApiFactory apiFactory = null;
-    private static YelpFusionApi yelpFusionApi = null;
+    private static YelpFusionApiFactory sYelpApiFactory = null;
+    private static YelpFusionApi sYelpApi = null;
 
     private String mMessage = "";
     private List<RestaurantInfoCell> mResults;
 
     public SearchOnYelpTask(Context context){
         mContext = context;
-        if(apiFactory == null){
-            apiFactory = new YelpFusionApiFactory();
+        if(sYelpApiFactory == null){
+            sYelpApiFactory = new YelpFusionApiFactory();
         }
     }
 
     @Override
-    protected Void doInBackground(String... strings) {
+    protected Void doInBackground(YelpSearchParameter... params) {
 
-        if(yelpFusionApi == null){
+        if(sYelpApi == null){
             try {
-                yelpFusionApi = apiFactory.createAPI(BuildConfig.YELP_API_KEY,
+                sYelpApi = sYelpApiFactory.createAPI(BuildConfig.YELP_API_KEY,
                         BuildConfig.YELP_API_SECRET);
             } catch (IOException e) {
                 e.printStackTrace();
@@ -55,16 +54,17 @@ public class SearchOnYelpTask extends AsyncTask<String, Void, Void> {
             }
         }
 
-        if(strings.length > 0){
-            // TODO: prepare search params
-        }
-        else{
-            try {
-                mResults = blockingSearch();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-                mMessage = e.getMessage();
+        try {
+            if(params.length > 0){
+                // TODO: prepare search params
+                mResults = blockingSearch(params[0]);
             }
+            else{
+                mResults = blockingSearch(null);
+            }
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+            mMessage = e.getMessage();
         }
         return null;
     }
@@ -83,18 +83,30 @@ public class SearchOnYelpTask extends AsyncTask<String, Void, Void> {
         }
     }
 
-    private List<RestaurantInfoCell> blockingSearch() throws InterruptedException {
+    private List<RestaurantInfoCell> blockingSearch(YelpSearchParameter param)
+            throws InterruptedException {
 
         final List<RestaurantInfoCell> results = new ArrayList<>();
         final Object syncObject = new Object();
 
-        Map<String, String> params = new HashMap<>();
-        params.put("term", "indian food");
-        params.put("latitude", "40.581140");
-        params.put("longitude", "-111.914184");
-        params.put("limit", "50");
+        Map<String, String> map = new HashMap<>();
+        if(param == null){
+            // default location is set around the campus
+            map.put("term", "indian food");
+//            map.put("latitude", "40.581140");
+//            map.put("longitude", "-111.914184");
+            map.put("latitude", "40.442570");
+            map.put("longitude", "-79.945676");
+            map.put("limit", "50");
+        }
+        else{
+            map.put("term", "chinese food");
+            map.put("latitude", Double.toString(param.location.getLatitude()));
+            map.put("longitude", Double.toString(param.location.getLongitude()));
+            map.put("limit", "50");
+        }
 
-        Call<SearchResponse> call = yelpFusionApi.getBusinessSearch(params);
+        Call<SearchResponse> call = sYelpApi.getBusinessSearch(map);
         Callback<SearchResponse> callback = new Callback<SearchResponse>() {
 
             @Override
