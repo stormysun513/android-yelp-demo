@@ -1,3 +1,5 @@
 <resources>
-    <string name="app_name">DemoApp2</string>
+    <string name="app_name">Quick Select</string>
+    <string name="action_tweet">Tweet</string>
+    <string name="action_settings">Settings</string>
 </resources>
