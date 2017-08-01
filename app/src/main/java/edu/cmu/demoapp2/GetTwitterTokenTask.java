@@ -12,12 +12,10 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.Toast;
 
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
 import twitter4j.TwitterFactory;
-import twitter4j.User;
 import twitter4j.auth.AccessToken;
 import twitter4j.auth.RequestToken;
 
@@ -27,7 +25,7 @@ import twitter4j.auth.RequestToken;
 
 public class GetTwitterTokenTask extends AsyncTask<String, Void, String> {
 
-    private static final String TAG = "DEMO";
+    private static final String TAG = "YELP_DEMO";
 
     // GUI objects
     private Context mContext;
@@ -119,7 +117,7 @@ public class GetTwitterTokenTask extends AsyncTask<String, Void, String> {
                     } else if (url.contains("denied")) {
                         mDialog.dismiss();
                         if(mContext instanceof GetTwitterTokenTaskListener) {
-                            ((GetTwitterTokenTaskListener) mContext).onTaskFailed("permission denied");
+                            ((GetTwitterTokenTaskListener) mContext).onTokenTaskFailed("permission denied");
                         }
                     }
                 }
@@ -146,7 +144,7 @@ public class GetTwitterTokenTask extends AsyncTask<String, Void, String> {
 
         } else {
             if(mContext instanceof GetTwitterTokenTaskListener) {
-                ((GetTwitterTokenTaskListener) mContext).onTaskFailed("network error");
+                ((GetTwitterTokenTaskListener) mContext).onTokenTaskFailed("network error");
             }
         }
     }
@@ -196,12 +194,12 @@ public class GetTwitterTokenTask extends AsyncTask<String, Void, String> {
             mProgressBar.dismiss();
             if(mAccessToken != null){
                 if(mContext instanceof GetTwitterTokenTaskListener) {
-                    ((GetTwitterTokenTaskListener) mContext).onTaskCompleted(mAccessToken);
+                    ((GetTwitterTokenTaskListener) mContext).onTokenTaskCompleted(mAccessToken);
                 }
             }
             else{
                 if(mContext instanceof GetTwitterTokenTaskListener) {
-                    ((GetTwitterTokenTaskListener) mContext).onTaskFailed("twitter server error");
+                    ((GetTwitterTokenTaskListener) mContext).onTokenTaskFailed("twitter server error");
                 }
             }
         }

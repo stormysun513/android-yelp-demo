@@ -13,9 +13,11 @@ import android.widget.ListView;
 
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements SearchOnYelpTaskListener {
+public class MainActivity extends AppCompatActivity implements
+        SearchOnYelpTaskListener, PostTwitterTaskListener {
 
     private static final String TAG = "YELP_DEMO";
+
     private ListView mListView;
 
     @Override
@@ -66,6 +68,7 @@ public class MainActivity extends AppCompatActivity implements SearchOnYelpTaskL
                 //What ever you want to do with the value
                 String input = edittext.getText().toString();
                 Log.i(TAG, String.format("Input: %s", input));
+                new PostTwitterTask(MainActivity.this).execute(input);
             }
         });
 
@@ -78,7 +81,7 @@ public class MainActivity extends AppCompatActivity implements SearchOnYelpTaskL
     }
 
     @Override
-    public void onTaskCompleted(List<RestaurantInfoCell> results) {
+    public void onSearchTaskCompleted(List<RestaurantInfoCell> results) {
 
         final RestaurantInfoListAdapter adapter = new RestaurantInfoListAdapter(this, results);
 
@@ -88,7 +91,17 @@ public class MainActivity extends AppCompatActivity implements SearchOnYelpTaskL
     }
 
     @Override
-    public void onTaskFailed(String message) {
+    public void onSearchTaskFailed(String message) {
         Log.i(TAG, "yelp search failed");
+    }
+
+    @Override
+    public void onPostTaskCompleted() {
+        Log.i(TAG, "post a tweet successfully");
+    }
+
+    @Override
+    public void onPostTaskFailed(String message) {
+        Log.i(TAG, "failed to post a tweet: " + message);
     }
 }

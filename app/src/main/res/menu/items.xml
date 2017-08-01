@@ -5,7 +5,7 @@
     <item
         android:id="@+id/action_tweet"
         android:icon="@drawable/twitter_logo_white"
-        android:title="@string/action_tweet"
+        android:title="@string/app_action_tweet"
         app:showAsAction="ifRoom"/>
 
     <!-- Settings, should always be in the overflow -->

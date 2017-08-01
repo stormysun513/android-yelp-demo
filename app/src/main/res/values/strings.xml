@@ -1,5 +1,9 @@
 <resources>
-    <string name="app_name">Quick Select</string>
-    <string name="action_tweet">Tweet</string>
-    <string name="action_settings">Settings</string>
+    <string name="app_name">QuickSelect</string>
+    <string name="app_action_tweet">Tweet</string>
+    <string name="app_action_settings">Settings</string>
+    <string name="app_sp">cmu.edu.demoapp2.sp</string>
+    <string name="app_twitter_credential">cmu.edu.demoapp2.twitter.credential</string>
+    <string name="app_twitter_token">cmu.edu.demoapp2.twitter.token</string>
+    <string name="app_twitter_secret">cmu.edu.demoapp2.twitter.secret</string>
 </resources>

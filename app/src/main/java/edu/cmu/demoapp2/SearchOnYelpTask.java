@@ -2,7 +2,6 @@ package edu.cmu.demoapp2;
 
 import android.content.Context;
 import android.os.AsyncTask;
-import android.util.Log;
 
 import com.yelp.fusion.client.connection.YelpFusionApi;
 import com.yelp.fusion.client.connection.YelpFusionApiFactory;
@@ -77,9 +76,9 @@ public class SearchOnYelpTask extends AsyncTask<String, Void, Void> {
         if(mContext instanceof SearchOnYelpTaskListener) {
             SearchOnYelpTaskListener listener = (SearchOnYelpTaskListener) mContext;
             if (mMessage.isEmpty()) {
-                listener.onTaskCompleted(mResults);
+                listener.onSearchTaskCompleted(mResults);
             } else {
-                listener.onTaskFailed(mMessage);
+                listener.onSearchTaskFailed(mMessage);
             }
         }
     }
@@ -103,7 +102,6 @@ public class SearchOnYelpTask extends AsyncTask<String, Void, Void> {
                 SearchResponse searchResponse = response.body();
                 List<Business> restaurants = searchResponse.getBusinesses();
                 for(Business business: restaurants){
-//                    Log.d(TAG, String.format("name: %s, url: %s", business.getName(), business.getImageUrl()));
                     results.add(new RestaurantInfoCell(
                             business.getName(),
                             business.getLocation().getAddress1(),

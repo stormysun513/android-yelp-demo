@@ -39,6 +39,7 @@ dependencies {
 
     compile 'org.twitter4j:twitter4j-core:4.0.6'
     compile 'org.twitter4j:twitter4j-async:4.0.6'
+
     compile 'io.github.ranga543:yelp-fusion-client:0.1.2'
 }
 

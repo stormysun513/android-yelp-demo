@@ -7,6 +7,6 @@ import java.util.List;
  */
 
 public interface SearchOnYelpTaskListener {
-    void onTaskCompleted(List<RestaurantInfoCell> results);
-    void onTaskFailed(String message);
+    void onSearchTaskCompleted(List<RestaurantInfoCell> results);
+    void onSearchTaskFailed(String message);
 }

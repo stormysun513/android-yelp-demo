@@ -12,11 +12,15 @@ public class LoginActivity extends AppCompatActivity implements GetTwitterTokenT
 
     private static final String TAG = "YELP_DEMO";
 
+    private TwitterCredentialDao dao;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         hideSystemUI();
+
+        dao = new TwitterCredentialDao(this);
     }
 
     @Override
@@ -26,21 +30,28 @@ public class LoginActivity extends AppCompatActivity implements GetTwitterTokenT
     }
 
     public void onClickFacebookSignInButton(View view){
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
+        startMainActivity();
     }
 
     public void onClickTwitterSignInButton(View view){
-        new GetTwitterTokenTask(this).execute();
+
+        if(dao.checkTwitterCredential()){
+            startMainActivity();
+        }
+        else{
+            new GetTwitterTokenTask(this).execute();
+        }
     }
 
     @Override
-    public void onTaskCompleted(AccessToken accessToken) {
+    public void onTokenTaskCompleted(AccessToken accessToken) {
         Log.i(TAG, "successfully sign in with twitter account");
+        dao.saveTwitterCredential(accessToken.getToken(), accessToken.getTokenSecret());
+        startMainActivity();
     }
 
     @Override
-    public void onTaskFailed(String message) {
+    public void onTokenTaskFailed(String message) {
 
     }
 
@@ -56,5 +67,10 @@ public class LoginActivity extends AppCompatActivity implements GetTwitterTokenT
                         | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION // hide nav bar
                         | View.SYSTEM_UI_FLAG_FULLSCREEN // hide status bar
                         | View.SYSTEM_UI_FLAG_IMMERSIVE);
+    }
+
+    private void startMainActivity(){
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
     }
 }
