@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity implements
         switch (item.getItemId()) {
             case R.id.action_tweet:
                 // generate a dialogue for twitter post input
-                getInputFromUser();
+                fetchInputFromEditText();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -134,7 +134,7 @@ public class MainActivity extends AppCompatActivity implements
         mListView = (ListView) findViewById(R.id.listView);
     }
 
-    private void getInputFromUser(){
+    private void fetchInputFromEditText() {
 
         AlertDialog.Builder alert = new AlertDialog.Builder(this);
 
